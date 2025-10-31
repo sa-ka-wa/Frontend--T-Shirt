@@ -1,0 +1,76 @@
+.artist-inspiration {
+  padding: var(--space-xl) 0;
+}
+
+.inspiration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-2xl);
+  margin-top: var(--space-xl);
+}
+
+.inspiration-card {
+  background: var(--prolific-light-gray);
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.inspiration-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--prolific-red);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
+}
+
+.inspiration-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.inspiration-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.inspiration-card:hover .inspiration-image img {
+  transform: scale(1.1);
+}
+
+.inspiration-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: var(--space-md);
+  border-radius: 50%;
+}
+
+.inspiration-content {
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.inspiration-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--prolific-white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.inspiration-content p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .inspiration-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}

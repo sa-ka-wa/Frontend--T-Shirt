@@ -1,0 +1,62 @@
+.limited-edition-badge {
+  background: linear-gradient(45deg, var(--prolific-red), var(--prolific-gold));
+  padding: var(--space-md);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.badge-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.badge-text {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: bold;
+  color: var(--prolific-white);
+}
+
+.badge-date {
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  color: var(--prolific-black);
+  background: var(--prolific-white);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 2px;
+}
+
+.badge-button {
+  background: var(--prolific-black);
+  color: var(--prolific-white);
+  border: 2px solid var(--prolific-black);
+  padding: var(--space-xs) var(--space-lg);
+  font-family: var(--font-family-heading);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.badge-button:hover {
+  background: transparent;
+  color: var(--prolific-black);
+}
+
+@media (max-width: 768px) {
+  .badge-content {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .badge-text {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+}

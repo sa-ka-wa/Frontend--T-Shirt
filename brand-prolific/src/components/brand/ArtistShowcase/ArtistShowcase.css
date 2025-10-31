@@ -1,0 +1,97 @@
+.artist-showcase {
+  padding: var(--space-xl) 0;
+}
+
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-2xl);
+}
+
+.artist-card {
+  background: var(--prolific-light-gray);
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.artist-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--prolific-red);
+}
+
+.artist-image {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.artist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.artist-card:hover .artist-image img {
+  transform: scale(1.05);
+}
+
+.artist-overlay {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+}
+
+.artist-style {
+  background: var(--prolific-red);
+  color: var(--prolific-white);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--font-family-heading);
+}
+
+.artist-info {
+  padding: var(--space-lg);
+}
+
+.artist-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+  color: var(--prolific-white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.artist-info p {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+  line-height: 1.6;
+}
+
+.view-works-btn {
+  background: transparent;
+  border: 2px solid var(--prolific-white);
+  color: var(--prolific-white);
+  padding: var(--space-sm) var(--space-md);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-family-heading);
+  font-size: 0.9rem;
+}
+
+.view-works-btn:hover {
+  background: var(--prolific-white);
+  color: var(--prolific-black);
+}
+
+@media (max-width: 768px) {
+  .artist-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
