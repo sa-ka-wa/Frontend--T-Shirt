@@ -1,9 +1,45 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// import { defineConfig } from 'vite'
+// import react from '@vitejs/plugin-react'
+
+// export default defineConfig({
+//   plugins: [react()],
+//   server: {
+//     port: 3003
+//   }
+// })
+
+// import { defineConfig } from "vite";
+// import react from "@vitejs/plugin-react";
+// import path from "path";
+
+// export default defineConfig({
+//   plugins: [react()],
+//   resolve: {
+//     alias: {
+//       "@t-shirt/shared": path.resolve(__dirname, "../shared/src"),
+//     },
+//   },
+//   server: {
+//     port: 3003,
+//   },
+// });
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      "@t-shirt/shared": path.resolve(__dirname, "../shared/src"),
+    },
+  },
   server: {
-    port: 3003
-  }
-})
+    port: 3003,
+    fs: {
+      // ✅ Allow access to the shared folder above this project
+      allow: [".."],
+    },
+  },
+});

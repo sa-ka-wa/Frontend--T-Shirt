@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home"; // Updated path
+import { Login } from "@t-shirt/shared/pages"; // ✅ import Login page
+
 // import Shop from "./pages/Shop";
 // import Artists from "./pages/Artists";
 // import Collections from "./pages/Collections";
@@ -20,6 +22,8 @@ function App() {
         <div className="prolific-app">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+
             {/* <Route path="/shop" element={<Shop />} />
             <Route path="/artists" element={<Artists />} />
             <Route path="/collections" element={<Collections />} />

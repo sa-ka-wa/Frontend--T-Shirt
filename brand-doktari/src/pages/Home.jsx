@@ -1,5 +1,6 @@
 import React from "react";
 import "./Home.css";
+import { Header } from "@t-shirt/shared/components"; // shared import
 // Correct import paths - adjust based on your actual folder structure
 import MusicHero from "../components/brand/MusicHero/MusicHero";
 import ArtistSpotlight from "../components/brand/ArtistSpotlight/ArtistSpotlight";
@@ -9,6 +10,9 @@ import CulturalStory from "../components/brand/CulturalStory/CulturalStory";
 const Home = () => {
   return (
     <div className="home">
+      {/* Shared Header */}
+      <Header brand="Doktari" />
+
       {/* Hero Section */}
       <MusicHero />
 

@@ -1,5 +1,7 @@
 import React from "react";
 import "./Home.css";
+import { Header } from "@t-shirt/shared/components";
+
 import CreativeHero from "../../components/brand/CreativeHero/CreativeHero";
 import ArtistShowcase from "../../components/brand/ArtistShowcase/ArtistShowcase";
 import ProductDisplay from "../../components/brand/ProductDisplay/ProductDisplay";
@@ -10,6 +12,9 @@ import LimitedEditionBadge from "../../components/brand/LimitedEditionBadge/Limi
 const Home = () => {
   return (
     <div className="prolific-home">
+      {/* Shared Header */}
+      <Header brand="Prolific" />
+
       {/* Main Hero Section */}
       <CreativeHero />
 
