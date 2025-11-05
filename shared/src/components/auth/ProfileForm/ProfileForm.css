@@ -424,3 +424,36 @@
   outline: 2px solid #007bff;
   outline-offset: -1px;
 }
+/* Go to Dashboard Button */
+.go-dashboard-btn {
+  padding: 12px 24px;
+  background-color: #17a2b8; /* Info/teal color for distinction */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  text-align: center;
+}
+
+.go-dashboard-btn:hover {
+  background-color: #138496;
+  transform: translateY(-1px);
+}
+
+.go-dashboard-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .go-dashboard-btn {
+    width: 100%;
+    min-width: auto;
+  }
+}

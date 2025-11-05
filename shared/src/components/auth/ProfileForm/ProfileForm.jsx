@@ -229,6 +229,19 @@ const ProfileForm = ({ user, onUpdate }) => {
   const displayValue = (value, placeholder = "Not provided") => {
     return value && value.trim() !== "" ? value : placeholder;
   };
+  const goToRoleApp = () => {
+    if (!user) return;
+
+    if (user.role === "admin") {
+      window.open("http://localhost:3001", "_blank");
+    } else if (user.role === "prolific") {
+      window.open("http://localhost:3002", "_blank");
+    } else if (user.role === "doktari") {
+      window.open("http://localhost:3003", "_blank");
+    } else {
+      alert("No specific app for your role");
+    }
+  };
 
   return (
     <div className="profile-form">
@@ -380,6 +393,13 @@ const ProfileForm = ({ user, onUpdate }) => {
               }}
             >
               Edit Profile
+            </button>
+            <button
+              type="button"
+              className="go-dashboard-btn"
+              onClick={goToRoleApp}
+            >
+              Go to Your Dashboard
             </button>
           </div>
         </div>
