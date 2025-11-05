@@ -20,5 +20,14 @@ export default defineConfig({
   },
   server: {
     port: 3004,
+    allowedHosts: [
+      "lvh.me",
+      "localhost",
+      "127.0.0.1",
+      "prolific.lvh.me",
+      "doktari.lvh.me",
+      "nike.lvh.me",
+      "adidas.lvh.me",
+    ],
   },
 });

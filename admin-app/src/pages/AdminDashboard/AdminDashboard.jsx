@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import AuthContext from "@t-shirt/shared/context/AuthContext.jsx";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
+  const { user, logout } = useContext(AuthContext);
   const location = useLocation();
 
   const isActive = (path) => {
@@ -45,11 +47,12 @@ const AdminDashboard = () => {
 
         <div className="sidebar-footer">
           <div className="user-info">
-            <div className="user-avatar">A</div>
+            <div className="user-avatar">{user.name.charAt(0)}</div>
             <div className="user-details">
-              <span className="user-name">Admin User</span>
-              <span className="user-role">Administrator</span>
+              <span className="user-name">{user?.name || "Admin User"}</span>
+              <span className="user-role">{user?.role || "Administrator"}</span>
             </div>
+            <button onClick={logout}>Logout</button>
           </div>
         </div>
       </aside>

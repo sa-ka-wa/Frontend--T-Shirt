@@ -9,6 +9,7 @@ const Register = () => {
 
   const handleRegister = async (formData) => {
     try {
+      console.log("📦 Sending registration data:", formData);
       // ✅ Call your backend service
       const res = await authService.register({
         name: formData.name,

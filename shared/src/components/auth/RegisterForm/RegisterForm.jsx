@@ -14,9 +14,25 @@ const RegisterForm = ({ onRegister }) => {
     confirmPassword: "",
   });
 
+  // Function to get brand_id based on current URL
+  const getBrandId = () => {
+    // For localhost development, use brand_id 1 (your default brand)
+    // In production, you might want to detect from subdomain
+    const hostname = window.location.hostname;
+
+    if (hostname.includes("localhost") || hostname.includes("127.0.0.1")) {
+      return 1; // Your default brand ID for development
+    }
+
+    // For production with subdomains, you could map subdomains to brand IDs
+    // For now, return default
+    return 1;
+  };
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const brandId = getBrandId();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,6 +53,8 @@ const RegisterForm = ({ onRegister }) => {
         name: formData.name,
         email: formData.email,
         password: formData.password,
+        role: "customer", // Default role for new registrations
+        brand_id: brandId, // Include the brand_id
       });
       setSuccess("Account created successfully! You can now sign in.");
       setFormData({ name: "", email: "", password: "", confirmPassword: "" });

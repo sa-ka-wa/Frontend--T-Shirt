@@ -1,35 +1,45 @@
+// App.jsx
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Dashboard from "./components/admin/Dashboard/Dashboard";
 import BrandManagement from "./pages/BrandManagement/BrandManagement";
 import ProductManagement from "./pages/ProductManagement/ProductManagement";
 import UserManagement from "./pages/UserManagement/UserManagement";
+import ProtectedRoute from "@t-shirt/shared/router/ProtectedRoute.jsx";
+import { Login, Register, Profile } from "@t-shirt/shared/pages";
 import "./styles/theme.css";
 import "./styles/globals.css";
 
 function App() {
   return (
-    <Router>
-      <div className="admin-app">
-        <Routes>
-          {/* Use the AdminDashboard as layout for all routes */}
-          <Route path="/" element={<AdminDashboard />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="brands" element={<BrandManagement />} />
-            <Route path="products" element={<ProductManagement />} />
-            <Route path="users" element={<UserManagement />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="admin-app">
+      <Routes>
+        {/* Public route */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+
+        {/* Protected admin routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="brands" element={<BrandManagement />} />
+          <Route path="products" element={<ProductManagement />} />
+          <Route path="users" element={<UserManagement />} />
+        </Route>
+
+        {/* Fallback route */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </div>
   );
 }
 
