@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import { Login } from "@t-shirt/shared/pages"; // ✅ import Login page
+import { Login, Register } from "@t-shirt/shared/pages"; // ✅ import Login page
 import "./styles/globals.css";
 import "./styles/theme.css";
 import "./styles/components.css";
@@ -13,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* You can later add routes like /shop, /about, /artist, etc. */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

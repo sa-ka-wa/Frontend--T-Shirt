@@ -21,9 +21,19 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (formData) => {
-    const res = await authService.login(formData.email, formData.password);
-    localStorage.setItem("token", res.token);
-    navigate("/profile");
+    try {
+      const res = await authService.login(formData.email, formData.password);
+
+      // ✅ Store token and user
+      localStorage.setItem("token", res.access_token);
+      localStorage.setItem("user", JSON.stringify(res.user));
+
+      // ✅ Navigate to profile
+      navigate("/profile");
+    } catch (err) {
+      console.error("Login failed:", err);
+      alert("Invalid credentials, please try again.");
+    }
   };
 
   return (

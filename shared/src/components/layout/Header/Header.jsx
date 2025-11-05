@@ -29,6 +29,9 @@ const Header = ({ brand = "Prolific" }) => {
             <Link to="/login" className="action-btn">
               Login
             </Link>
+            <Link to="/register" className="action-btn">
+              Register
+            </Link>
           </>
         ) : (
           <>
@@ -39,6 +42,9 @@ const Header = ({ brand = "Prolific" }) => {
             <Link to="/contact">Contact</Link>
             <Link to="/login" className="action-btn">
               Login
+            </Link>
+            <Link to="/register" className="action-btn">
+              Register
             </Link>
           </>
         )}

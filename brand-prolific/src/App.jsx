@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home"; // Updated path
-import { Login } from "@t-shirt/shared/pages"; // ✅ import Login page
+import { Login, Register, Profile } from "@t-shirt/shared/pages"; // ✅ import Login page
 
 // import Shop from "./pages/Shop";
 // import Artists from "./pages/Artists";
@@ -23,6 +23,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* <Route path="/shop" element={<Shop />} />
             <Route path="/artists" element={<Artists />} />
