@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Home.css";
 import { Header } from "@t-shirt/shared/components"; // shared import
 // Correct import paths - adjust based on your actual folder structure
@@ -8,6 +8,29 @@ import AlbumCollection from "../components/brand/AlbumCollection/AlbumCollection
 import CulturalStory from "../components/brand/CulturalStory/CulturalStory";
 
 const Home = () => {
+  useEffect(() => {
+    const [brand, setBrand] = useState("Doktari");
+    // 1️⃣ Detect current subdomain
+    const hostname = window.location.hostname;
+    const subdomain = hostname.split(".")[0]; // e.g. 'doktari' from 'doktari.lvh.me'
+
+    console.log("Detected subdomain:", subdomain);
+
+    // 2️⃣ Send to backend if detected
+    if (subdomain && subdomain !== "www" && subdomain !== "localhost") {
+      fetch("http://localhost:5000/api/brands/update-subdomain", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ subdomain }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log("Subdomain saved:", data))
+        .catch((err) => console.error("Error saving subdomain:", err));
+    }
+  }, []);
+
   return (
     <div className="home">
       {/* Shared Header */}

@@ -1,44 +1,52 @@
 import React, { useContext } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import AuthContext from "@t-shirt/shared/context/AuthContext.jsx";
+import { useBrand } from "@t-shirt/shared/context/BrandContext.jsx";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const { user, logout } = useContext(AuthContext);
+  const { brand, loading } = useBrand();
   const location = useLocation();
 
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
+  if (loading) return <p>Loading brand...</p>; // optional loading state
+
+  const isActive = (path) =>
+    location.pathname === `/admin${path}` ||
+    location.pathname.startsWith(`/admin${path}`);
 
   return (
     <div className="admin-dashboard">
       <aside className="sidebar">
         <div className="sidebar-header">
-          <img src="/src/assets/images/admin-logo.svg" alt="Admin Logo" />
+          <img
+            src={brand?.logo_url || "/default-logo.svg"}
+            alt={brand?.name || "Brand Logo"}
+          />
+
           <h2>Admin Panel</h2>
         </div>
         <nav className="sidebar-nav">
           <Link
-            to="/dashboard"
+            to="/admin/dashboard"
             className={`nav-link ${isActive("/dashboard") ? "active" : ""}`}
           >
             📊 Dashboard
           </Link>
           <Link
-            to="/brands"
+            to="/admin/brands"
             className={`nav-link ${isActive("/brands") ? "active" : ""}`}
           >
             🎨 Brand Management
           </Link>
           <Link
-            to="/products"
+            to="/admin/products"
             className={`nav-link ${isActive("/products") ? "active" : ""}`}
           >
             👕 Product Management
           </Link>
           <Link
-            to="/users"
+            to="/admin/users"
             className={`nav-link ${isActive("/users") ? "active" : ""}`}
           >
             👥 User Management

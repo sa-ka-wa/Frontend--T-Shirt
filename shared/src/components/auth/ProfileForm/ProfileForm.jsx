@@ -1,6 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./ProfileForm.css";
 
+// Helper function to get full image URL safely
+const getImageUrl = (imagePath, type = "avatar") => {
+  // If we have a valid backend image URL
+  if (imagePath && imagePath.startsWith("/")) {
+    return `http://localhost:5000${imagePath}`;
+  }
+  if (imagePath && imagePath.startsWith("http")) {
+    return imagePath;
+  }
+
+  // Safe inline placeholder SVG for avatar or banner
+  if (type === "avatar") {
+    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2RkZGRkZCIvPjwvc3ZnPg==";
+  } else {
+    // banner
+    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjEwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2NlY2VlY2UiLz48L3N2Zz4=";
+  }
+};
+
 const ProfileForm = ({ user, onUpdate }) => {
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -142,34 +161,35 @@ const ProfileForm = ({ user, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("🔄 Form submission started");
-
-    // Enhanced change detection with detailed logging
-    const hasFormChanges = Object.keys(formData).some(
-      (key) => formData[key] !== (user[key] ?? "")
-    );
-
-    const hasImageChanges =
-      avatarImage !== user?.avatar_url || bannerImage !== user?.banner_url;
-
-    console.log("📊 Changes analysis:", {
-      hasFormChanges,
-      hasImageChanges,
-      avatarImage,
-      originalAvatar: user?.avatar_url,
-      bannerImage,
-      originalBanner: user?.banner_url,
-    });
-
-    if (!hasFormChanges && !hasImageChanges) {
-      console.log("⚠️ No changes detected - cancelling update");
-      alert("⚠️ No changes detected to update");
-      setIsEditing(false);
-      return;
-    }
-
-    console.log("✅ Changes detected - proceeding with update");
     setIsLoading(true);
-    console.log("🚀 Sending update request...");
+
+    // // Enhanced change detection with detailed logging
+    // const hasFormChanges = Object.keys(formData).some(
+    //   (key) => formData[key] !== (user[key] ?? "")
+    // );
+
+    // const hasImageChanges =
+    //   avatarImage !== user?.avatar_url || bannerImage !== user?.banner_url;
+
+    // console.log("📊 Changes analysis:", {
+    //   hasFormChanges,
+    //   hasImageChanges,
+    //   avatarImage,
+    //   originalAvatar: user?.avatar_url,
+    //   bannerImage,
+    //   originalBanner: user?.banner_url,
+    // });
+
+    // if (!hasFormChanges && !hasImageChanges) {
+    //   console.log("⚠️ No changes detected - cancelling update");
+    //   alert("⚠️ No changes detected to update");
+    //   setIsEditing(false);
+    //   return;
+    // }
+
+    // console.log("✅ Changes detected - proceeding with update");
+    // setIsLoading(true);
+    // console.log("🚀 Sending update request...");
 
     try {
       const token = localStorage.getItem("token");
@@ -231,16 +251,30 @@ const ProfileForm = ({ user, onUpdate }) => {
   };
   const goToRoleApp = () => {
     if (!user) return;
+    const role = user.role.toLowerCase().trim(); // normalize
+    const token = localStorage.getItem("token");
+    let url = "";
 
-    if (user.role === "admin") {
-      window.open("http://localhost:3001", "_blank");
-    } else if (user.role === "prolific") {
-      window.open("http://localhost:3002", "_blank");
-    } else if (user.role === "doktari") {
-      window.open("http://localhost:3003", "_blank");
-    } else {
-      alert("No specific app for your role");
+    switch (user.role) {
+      case "admin":
+        url = "http://localhost:3001";
+        break;
+      case "prolific":
+        url = "http://localhost:3004";
+        break;
+      case "doktari":
+        url = "http://localhost:3003";
+        break;
+      default:
+        alert("No app for your role");
+        return;
     }
+
+    // Append token as query param so the new tab can read it
+    if (token) url += `?token=${token}`;
+
+    // Open the role-specific app in a new tab
+    window.open(url, "_blank");
   };
 
   return (
@@ -277,12 +311,15 @@ const ProfileForm = ({ user, onUpdate }) => {
             onClick={isEditing ? handleAvatarClick : undefined}
           >
             <img
-              src={getImageUrl(avatarImage)}
+              src={getImageUrl(avatarImage, "avatar")}
               alt="Profile Avatar"
               className="avatar-image"
               onError={(e) => {
-                console.log("❌ Image load error, using default");
-                e.target.src = "/default-avatar.png";
+                console.log("❌ Image load error, using placeholder");
+                // Replace with safe placeholder that will never 404
+                e.target.onerror = null; // stop looping
+                e.target.src =
+                  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2RkZGRkZCIvPjwvc3ZnPg==";
               }}
             />
             {isEditing && (
@@ -370,7 +407,20 @@ const ProfileForm = ({ user, onUpdate }) => {
             <div className="info-grid">
               <div className="info-group">
                 <label>Role</label>
-                <div className="info-value">{displayValue(formData.role)}</div>
+                <div className="info-value">
+                  {displayValue(formData.role)}
+                  <button
+                    type="button"
+                    onClick={goToRoleApp}
+                    style={{
+                      marginLeft: "8px",
+                      padding: "2px 6px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Go
+                  </button>
+                </div>
               </div>
 
               <div className="info-group">
@@ -393,13 +443,6 @@ const ProfileForm = ({ user, onUpdate }) => {
               }}
             >
               Edit Profile
-            </button>
-            <button
-              type="button"
-              className="go-dashboard-btn"
-              onClick={goToRoleApp}
-            >
-              Go to Your Dashboard
             </button>
           </div>
         </div>

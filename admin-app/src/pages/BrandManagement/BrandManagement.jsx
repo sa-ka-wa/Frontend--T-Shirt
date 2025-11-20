@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import brandService from "@t-shirt/shared/services/api/brandService";
 import BrandManagementComponent from "../../components/admin/BrandManagement/BrandManagement";
 import AuthContext from "@t-shirt/shared/context/AuthContext.jsx";
 import "./BrandManagement.css";
@@ -15,10 +16,8 @@ const BrandManagement = () => {
 
     const fetchBrands = async () => {
       try {
-        const response = await axios.get("/api/brands", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setBrands(response.data);
+        const data = await brandService.getAllBrands();
+        setBrands(data);
       } catch (err) {
         setError(err.message || "Failed to fetch brands");
       } finally {

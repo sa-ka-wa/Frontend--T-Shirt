@@ -16,18 +16,15 @@ export default defineConfig({
   resolve: {
     alias: {
       "@t-shirt/shared": path.resolve(__dirname, "../shared/src"),
+      "@admin": path.resolve(__dirname, "../admin-app/src/"),
     },
   },
   server: {
+    host: "prolific.lvh.me",
     port: 3004,
-    allowedHosts: [
-      "lvh.me",
-      "localhost",
-      "127.0.0.1",
-      "prolific.lvh.me",
-      "doktari.lvh.me",
-      "nike.lvh.me",
-      "adidas.lvh.me",
-    ],
+    open: true, // 👈 automatically open browser
+    fs: {
+      allow: [".."], // ✅ still allow shared folder
+    },
   },
 });

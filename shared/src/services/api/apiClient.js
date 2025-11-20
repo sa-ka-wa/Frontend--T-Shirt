@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api",
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -15,5 +18,20 @@ apiClient.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Add response interceptor for better error handling
+apiClient.interceptors.response.use(
+  (response) => {
+    console.log(`✅ API Response: ${response.status} ${response.config.url}`);
+    return response;
+  },
+  (error) => {
+    console.error(
+      `❌ API Error: ${error.response?.status} ${error.config?.url}`,
+      error
+    );
+    return Promise.reject(error);
+  }
+);
 
 export default apiClient;

@@ -10,6 +10,11 @@ export default defineConfig({
     },
   },
   server: {
+    host: "admin.lvh.me", // 👈 same domain
     port: 3001,
+    open: true, // 👈 automatically open browser
+    fs: {
+      allow: [".."], // ✅ still allow shared folder
+    },
   },
 });

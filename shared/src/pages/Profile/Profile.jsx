@@ -19,40 +19,10 @@ const Profile = () => {
     navigate("/");
   };
 
-  const goToRoleApp = () => {
-    if (!user) return;
-
-    if (user.role === "admin") {
-      window.open("http://localhost:3001", "_blank");
-    } else if (user.role === "prolific") {
-      window.open("http://localhost:3002", "_blank");
-    } else if (user.role === "doktari") {
-      window.open("http://localhost:3003", "_blank");
-    } else {
-      alert("No specific app for your role");
-    }
-  };
-
-  if (!user) return <p>Loading profile...</p>;
-
   return (
     <div className="profile-page">
       <ProfileForm user={user} onUpdate={handleUpdate} />
       {/* Button to navigate to role-specific app */}
-      <button
-        onClick={goToRoleApp}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Go to Your Dashboard
-      </button>
     </div>
   );
 };

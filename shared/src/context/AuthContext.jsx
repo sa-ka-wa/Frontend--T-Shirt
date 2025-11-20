@@ -1,5 +1,6 @@
 // shared/src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect } from "react";
+import authService from "../services/api/authService.js";
 
 // Create the context
 const AuthContext = createContext();
@@ -10,17 +11,36 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(
     () => localStorage.getItem("token") || null
   );
+  const [loading, setLoading] = useState(true); // NEW
 
-  // Optional: load user info from token (if needed)
   useEffect(() => {
+    let mounted = true;
+
     if (token) {
-      // e.g., fetch user data from backend using token
-      // axios.get("/api/me", { headers: { Authorization: `Bearer ${token}` } })
-      //   .then(res => setUser(res.data))
-      //   .catch(err => console.error(err));
+      setLoading(true);
+      authService
+        .getProfile()
+        .then((data) => {
+          if (!mounted) return;
+          setUser(data);
+        })
+        .catch((err) => {
+          if (!mounted) return;
+          console.error("Failed to fetch user profile:", err);
+          setUser(null);
+        })
+        .finally(() => {
+          if (!mounted) return;
+          setLoading(false);
+        });
     } else {
       setUser(null);
+      setLoading(false);
     }
+
+    return () => {
+      mounted = false;
+    };
   }, [token]);
 
   const login = (userData, token) => {
@@ -36,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

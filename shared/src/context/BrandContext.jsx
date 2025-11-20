@@ -24,12 +24,14 @@ export const BrandProvider = ({ children }) => {
         }
 
         // 3️⃣ Fetch brand info from backend
-        const res = await axios.get(
-          "http://localhost:5000/api/brands/by-subdomain",
-          {
-            params: { subdomain },
-          }
-        );
+        const backendHost = window.location.hostname.includes("lvh.me")
+          ? "http://lvh.me:5000"
+          : "http://localhost:5000";
+
+        const res = await axios.get(`${backendHost}/api/brands/by-subdomain`, {
+          params: { subdomain },
+          withCredentials: true, // if cookies/JWT are used
+        });
 
         const detectedBrand = res.data;
         setBrand(detectedBrand);
